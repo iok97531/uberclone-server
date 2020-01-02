@@ -1,6 +1,14 @@
-import {Column, Entity, BaseEntity, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, ManyToOne} from "typeorm";
-import Chat from "./Chat";
-import User from "./User";
+import Chat from './Chat';
+import User from './User';
+import {
+    BaseEntity,
+    Column,
+    CreateDateColumn,
+    Entity,
+    ManyToOne,
+    PrimaryGeneratedColumn,
+    UpdateDateColumn
+    } from 'typeorm';
 @Entity()
 class Message extends BaseEntity{
     @PrimaryGeneratedColumn() id: number;

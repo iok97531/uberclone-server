@@ -1,6 +1,14 @@
-import {Column, Entity, BaseEntity, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, ManyToOne} from "typeorm";
-import { rideStatus } from "../types/types";
-import User from "./User";
+import User from './User';
+import { rideStatus } from '../types/types';
+import {
+    BaseEntity,
+    Column,
+    CreateDateColumn,
+    Entity,
+    ManyToOne,
+    PrimaryGeneratedColumn,
+    UpdateDateColumn
+    } from 'typeorm';
 
 @Entity()
 class Ride extends BaseEntity{

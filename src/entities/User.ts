@@ -1,18 +1,29 @@
-import bcrypt from "bcrypt";
-import {IsEmail} from "class-validator";
-import {BaseEntity, Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, BeforeInsert, BeforeUpdate, ManyToOne, OneToMany} from "typeorm";
-import Chat from "./Chat";
-import Message from "./Message";
-import Verification from "./Verification";
-import Ride from "./Ride";
+import Chat from './Chat';
+import Message from './Message';
+import Ride from './Ride';
+import Verification from './Verification';
+import bcrypt from 'bcrypt';
+import { IsEmail } from 'class-validator';
+import {
+    BaseEntity,
+    BeforeInsert,
+    BeforeUpdate,
+    Column,
+    CreateDateColumn,
+    Entity,
+    ManyToOne,
+    OneToMany,
+    PrimaryGeneratedColumn,
+    UpdateDateColumn
+    } from 'typeorm';
 
 const BCRYPT_ROUNDS = 10;
 
 @Entity()
 class User extends BaseEntity {
     @PrimaryGeneratedColumn() id: number;
-    @Column({type: "text", unique: true})
-    @IsEmail() email: string;
+    @Column({type: "text", nullable: true})
+    @IsEmail() email: string | null;
 
     @Column({type: "boolean", default:false})
     verifiedEmail: boolean;
@@ -23,13 +34,13 @@ class User extends BaseEntity {
     @Column({type: "text"})
     lastName: string;
 
-    @Column({type: "int"})
+    @Column({type: "int", nullable: true})
     age: number;
 
-    @Column({type: "text"})
+    @Column({type: "text", nullable: true})
     password: string;
 
-    @Column({type: "text"})
+    @Column({type: "text", nullable: true})
     phoneNumber: string;
 
     @Column({type: "boolean", default:false})
@@ -59,6 +70,9 @@ class User extends BaseEntity {
 
     @Column({type: "double precision", default: 0})
     lastOrientation: number;
+
+    @Column({type: "text", nullable: true})
+    fbId: string;
 
     @ManyToOne(type => Chat, chat => chat.participants)
     chat: Chat;

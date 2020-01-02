@@ -1,5 +1,7 @@
-import { ConnectionOptions } from "typeorm";
-
+import dotenv from 'dotenv';
+import { ConnectionOptions } from 'typeorm';
+dotenv.config();
+ 
 const connectionOptions: ConnectionOptions = {
     type: "postgres",
     database: "uberclone",

@@ -1,6 +1,15 @@
-import {Column, Entity, BaseEntity, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, BeforeInsert, ManyToOne} from "typeorm";
-import { verificationTarget } from "src/types/types";
-import User from "./User";
+import User from './User';
+import { verificationTarget } from 'src/types/types';
+import {
+    BaseEntity,
+    BeforeInsert,
+    Column,
+    CreateDateColumn,
+    Entity,
+    ManyToOne,
+    PrimaryGeneratedColumn,
+    UpdateDateColumn
+    } from 'typeorm';
 
 const PHONE = "PHONE";
 const EMAIL = "EMAIL";
