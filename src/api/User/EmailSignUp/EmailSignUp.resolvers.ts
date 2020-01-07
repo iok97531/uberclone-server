@@ -1,7 +1,9 @@
 import User from '../../../entities/User';
 import { EmailSignUpMutationArgs, EmailSignUpResponse } from '../../../types/graph';
 import createJWT from '../../../utils/createJWT';
+import Verification from 'src/entities/Verification';
 import { Resolvers } from 'src/types/resolvers';
+import { sendVerificationEmail } from 'src/utils/sendEmail';
 
 const resolvers: Resolvers = {
     Mutation: {
@@ -16,13 +18,32 @@ const resolvers: Resolvers = {
                         token: null
                     };
                 } else {
-                    const newUser = await User.create({...args}).save();
-                    const token = createJWT(newUser.id);
-                    return {
-                        ok: true,
-                        error: null,
-                        token
-                    };
+                    const phoneVerification = await Verification.findOne({
+                        payload: args.phoneNumber,
+                        verified: true
+                    });
+                    if(phoneVerification) {
+                        const newUser = await User.create({...args}).save();
+                        if(newUser.email){
+                            const emailVerification = await Verification.create({
+                                payload: newUser.email,
+                                target: "EMAIL"
+                            }).save();
+                            await sendVerificationEmail(newUser.fullName, emailVerification.key);
+                        }
+                        const token = createJWT(newUser.id);
+                        return {
+                            ok: true,
+                            error: null,
+                            token
+                        };
+                    } else {
+                        return {
+                            ok: false,
+                            error: "You Haven't verified phone number",
+                            token: null
+                        }
+                    }
                 } 
             } catch(error) {
                 return {
