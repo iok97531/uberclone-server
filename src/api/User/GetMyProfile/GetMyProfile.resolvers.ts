@@ -1,10 +1,11 @@
+import User from '../../../entities/User';
+import privateResolver from '../../../utils/privateResolver';
 import { Resolvers } from 'src/types/resolvers';
-import privateResolver from 'src/utils/resolverMiddleware';
 
 const resolvers: Resolvers = {
     Query: {
         GetMyProfile: privateResolver (async(_, __, {req}) => {
-            const {user} = req;
+            const user:User = req.user;
             return {
                 ok: true,
                 error: null,

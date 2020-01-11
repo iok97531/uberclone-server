@@ -1,9 +1,9 @@
 import User from '../../../entities/User';
+import Verification from '../../../entities/Verification';
 import { EmailSignUpMutationArgs, EmailSignUpResponse } from '../../../types/graph';
 import createJWT from '../../../utils/createJWT';
-import Verification from 'src/entities/Verification';
+import { sendVerificationEmail } from '../../../utils/sendEmail';
 import { Resolvers } from 'src/types/resolvers';
-import { sendVerificationEmail } from 'src/utils/sendEmail';
 
 const resolvers: Resolvers = {
     Mutation: {
