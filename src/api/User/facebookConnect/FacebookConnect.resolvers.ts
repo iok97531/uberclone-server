@@ -31,7 +31,7 @@ const resolvers: Resolvers = {
       try {
         const newUser = await User.create({
           ...args,
-          profilePhoto: `https://graph.facebook.com/${fbId}/picture?type=squre`
+          profilePhoto: `https://graph.facebook.com/${fbId}/picture?type=square`
         }).save();
         const token = createJWT(newUser.id);
         return {
