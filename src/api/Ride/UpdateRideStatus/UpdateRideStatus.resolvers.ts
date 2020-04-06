@@ -39,6 +39,12 @@ const resolvers: Resolvers = {
               );
             }
             if (ride) {
+              if (args.status === "FINISHED") {
+                ride.passenger.isRiding = false;
+                ride.passenger.save();
+                user.isTaken = false;
+                user.save();
+              }
               ride.status = args.status;
               ride.save();
               pubSub.publish("rideUpdate", { RideStatusSubscription: ride });

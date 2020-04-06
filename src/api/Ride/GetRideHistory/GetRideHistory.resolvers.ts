@@ -1,35 +1,39 @@
+import Ride from '../../../entities/Ride';
 import User from '../../../entities/User';
-import { GetMyPlaceResponse } from '../../../types/graph';
+import { GetRideHistoryResponse } from '../../../types/graph';
 import privateResolver from '../../../utils/privateResolver';
 import { Resolvers } from 'src/types/resolvers';
 
 const resolvers: Resolvers = {
   Query: {
-    GetMyPlaces: privateResolver(
-      async (_, __, { req }): Promise<GetMyPlaceResponse> => {
+    GetRideHistory: privateResolver(
+      async (_, __, { req }): Promise<GetRideHistoryResponse> => {
+        const user: User = req.user;
         try {
-          const user = await User.findOne(
-            { id: req.user.id },
-            { relations: ["places"] }
-          );
-          if (user) {
+          const rides = await Ride.find({
+            where: {
+              passengerId: user.id,
+              status: "FINISHED"
+            }
+          });
+          if (rides) {
             return {
               ok: true,
               error: null,
-              places: user.places
+              rides
             };
           } else {
             return {
               ok: false,
-              error: "User not found",
-              places: null
+              error: "No history",
+              rides: null
             };
           }
         } catch (error) {
           return {
             ok: false,
             error: error.message,
-            places: null
+            rides: null
           };
         }
       }

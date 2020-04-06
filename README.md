@@ -45,7 +45,6 @@ Server for the Uber Clone. GraphQL, Typescript, NodeJS
 - [x] Get Chat Room Messages
 - [x] Send a Chat Message
 - [x] Subscribe to Chat Room Messages
-- [ ] Get Ride History
-- [ ] See Ride Detail
+- [x] Get Ride History
 
 [uberclone](https://iok97531.github.io/uberclone-client/)
